@@ -109,8 +109,8 @@ class Battleship {
 
 
     IsGameOver(controller, p1, p2) {
-        sunkp1s = controller.getSunkShips(p1);
-        sunkp2s = controller.getSunkShips(p2);
+        var sunkp1s = controller.getSunkShips(p1);
+        var sunkp2s = controller.getSunkShips(p2);
         if (sunkp1s.length === p1.length) {
             console.log('You hae lost')
             return true;
