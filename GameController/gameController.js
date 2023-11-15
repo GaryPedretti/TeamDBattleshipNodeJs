@@ -20,11 +20,17 @@ class GameController {
         var returnvalue = false;
         ships.forEach(function (ship) {
             ship.positions.forEach(position => {
-                if (position.row == shot.row && position.column == shot.column)
+                if (position.row == shot.row && position.column == shot.column) {
                     returnvalue = true;
+                    ship.setHit(position);
+                }
             });
         });
         return returnvalue;
+    }
+
+    static getSunkShips(ships) {
+        return ships.map(x => x.isSunk);
     }
 
     static isShipValid(ship) {

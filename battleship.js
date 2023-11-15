@@ -69,6 +69,7 @@ class Battleship {
             }
 
             console.log(isHit ? "Yeah ! Nice hit !" : "Miss");
+            console.log(gameController.getSunkShips(this.enemyFleet));
 
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
@@ -77,6 +78,7 @@ class Battleship {
 
             console.log();
             console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
+            console.log(gameController.getSunkShips(this.myFleet));
             if (isHit) {
                 beep();
 
@@ -97,6 +99,10 @@ class Battleship {
         var letter = letters.get(input.toUpperCase().substring(0, 1));
         var number = parseInt(input.substring(1, 2), 10);
         return new position(letter, number);
+    }
+
+    IsGameOver() {
+
     }
 
     GetRandomPosition() {
