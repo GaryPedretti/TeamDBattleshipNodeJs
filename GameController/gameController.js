@@ -30,7 +30,7 @@ class GameController {
     }
 
     static getSunkShips(ships) {
-        return ships.map(x => x.isSunk);
+        return ships.filter(x => x.isSunk);
     }
 
     static isShipValid(ship) {
