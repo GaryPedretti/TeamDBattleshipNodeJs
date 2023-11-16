@@ -72,6 +72,10 @@ class Battleship {
             } else {
                 console.log(cliColor.blue("Miss"));
             }
+            //console.log(gameController.getSunkShips(this.enemyFleet));
+            if (this.IsGameOver(gameController, this.myFleet, this.enemyFleet)) {
+                break;
+            }
 
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
@@ -79,7 +83,11 @@ class Battleship {
             telemetryWorker.postMessage({eventName: 'Computer_ShootPosition', properties:  {Position: computerPos.toString(), IsHit: isHit}});
 
             console.log();
-           // console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
+            console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
+            //console.log(gameController.getSunkShips(this.myFleet));
+            if (this.IsGameOver(gameController, this.myFleet, this.enemyFleet)) {
+                break;
+            }
             if (isHit) {
                 beep();
                 console.log(cliColor.red(`Computer shot in ${computerPos.column}${computerPos.row} and has hit your ship !`));
@@ -103,6 +111,20 @@ class Battleship {
         var letter = letters.get(input.toUpperCase().substring(0, 1));
         var number = parseInt(input.substring(1, 2), 10);
         return new position(letter, number);
+    }
+
+
+    IsGameOver(controller, p1, p2) {
+        var sunkp1s = controller.getSunkShips(p1);
+        var sunkp2s = controller.getSunkShips(p2);
+        if (sunkp1s.length === p1.length) {
+            console.log('You lost!')
+            process.exit();
+        }
+        else if (sunkp2s.length === p2.length) {
+            console.log('You are the winner!')
+            process.exit();
+        }
     }
 
     GetRandomPosition() {
