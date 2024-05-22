@@ -64,7 +64,8 @@ class Battleship {
                 console.log(cliColor.blue("Miss"))
                 this.PrintMiss(cliColor.blue)
             }
-
+            console.log('**********************************************************\n\n')
+        
 
 
             var computerPos = this.GetRandomPosition();
@@ -81,9 +82,11 @@ class Battleship {
                 console.log(cliColor.blue(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (`has missed your ship !`)));
                 this.PrintMiss(cliColor.blue)
             }
+            console.log('**********************************************************\n\n')
         }
         while (true);
     }
+
     PrintExplosion(color){
         beep();
                 console.log(color("                \\         .  ./"));
