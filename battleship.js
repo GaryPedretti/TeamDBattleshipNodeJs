@@ -8,6 +8,7 @@ const letters = require("./GameController/letters.js");
 let telemetryWorker;
 
 class Battleship {
+    
     start() {
         telemetryWorker = new Worker("./TelemetryClient/telemetryClient.js");   
 
@@ -57,40 +58,39 @@ class Battleship {
 
             if (isHit) {
                 beep();
-
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                console.log(cliColor.red("Yeah ! Nice hit !"))
+                this.PrintExplosion(cliColor.red)
+            } else {
+                console.log(cliColor.blue("Miss"))
             }
 
-            console.log(isHit ? "Yeah ! Nice hit !" : "Miss");
+
 
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
 
             telemetryWorker.postMessage({eventName: 'Computer_ShootPosition', properties:  {Position: computerPos.toString(), IsHit: isHit}});
 
-            console.log();
-            console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
             if (isHit) {
                 beep();
-
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                console.log(cliColor.red(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (`has hit your ship !`)));
+                this.PrintExplosion(cliColor.red)
+            } else {
+                console.log(cliColor.blue(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (`has missed your ship !`)));
             }
         }
         while (true);
+    }
+    PrintExplosion(color){
+        beep();
+                console.log(color("                \\         .  ./"));
+                console.log(color("              \\      .:\";'.:..\"   /"));
+                console.log(color("                  (M^^.^~~:.'\")."));
+                console.log(color("            -   (/  .    . . \\ \\)  -"));
+                console.log(color("               ((| :. ~ ^  :. .|))"));
+                console.log(color("            -   (\\- |  \\ /  |  /)  -"));
+                console.log(color("                 -\\  \\     /  /-"));
+                console.log(color("                   \\  \\   /  /"));
     }
 
     static ParsePosition(input) {
