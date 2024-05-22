@@ -62,11 +62,13 @@ class Battleship {
                 this.PrintExplosion(cliColor.red)
             } else {
                 console.log(cliColor.blue("Miss"))
+                this.PrintMiss(cliColor.blue)
             }
 
 
 
             var computerPos = this.GetRandomPosition();
+            // var computerPos = Battleship.ParsePosition('A1')
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
 
             telemetryWorker.postMessage({eventName: 'Computer_ShootPosition', properties:  {Position: computerPos.toString(), IsHit: isHit}});
@@ -77,6 +79,7 @@ class Battleship {
                 this.PrintExplosion(cliColor.red)
             } else {
                 console.log(cliColor.blue(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (`has missed your ship !`)));
+                this.PrintMiss(cliColor.blue)
             }
         }
         while (true);
@@ -91,6 +94,17 @@ class Battleship {
                 console.log(color("            -   (\\- |  \\ /  |  /)  -"));
                 console.log(color("                 -\\  \\     /  /-"));
                 console.log(color("                   \\  \\   /  /"));
+    }
+    PrintMiss(color) {
+        beep();
+            console.log(color("                \\         .  ./"));
+            console.log(color("              ~      .:'     "));
+            console.log(color("          --    ~        .   "));
+            console.log(color("                :     .     : "));
+            console.log(color("        ~      /'--, .:    /"));
+            console.log(color("              <~   ~~~~\\ /"));
+            console.log(color("           ~   ~     ~~~/"));
+            console.log(color("             ~~~      ~~~~~~"));
     }
 
     static ParsePosition(input) {
